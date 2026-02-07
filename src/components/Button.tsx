@@ -27,7 +27,7 @@ export default function Button({
       disabled={disabled}
       style={{ padding, borderRadius }}
       className={`
-        inline-flex items-center gap-2
+        flex items-center gap-2
         transition-all
         cursor-pointer
         focus:outline-none focus-visible:ring-2

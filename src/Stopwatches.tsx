@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Stopwatch } from "./Stopwatch";
 import Button from "./components/Button";
+import { Plus } from "lucide-react";
 
 function Stopwatches() {
   const [stopwatchList, setStopwatchList] = useState<number[]>([]);
@@ -14,18 +15,21 @@ function Stopwatches() {
   };
 
   return (
-    <div className="mt-6 w-full flex flex-col justify-center items-center gap-y-6">
+    <div className="w-full px-16 py-12">
       <Button
-        className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-150 text-lg"
+        className="mx-auto bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-150 text-lg"
         onClick={addStopwatch}
+        icon={<Plus className="w-5 h-5" fill="currentColor" />}
         padding="1rem 3rem"
       >
         Add Stopwatch
       </Button>
 
-      {stopwatchList.map((id) => (
-        <Stopwatch key={id} onDelete={() => removeStopwatch(id)} />
-      ))}
+      <div className="mt-12 grid lg:grid-cols-3 grid-cols-1 gap-6">
+        {stopwatchList.map((id) => (
+          <Stopwatch key={id} onDelete={() => removeStopwatch(id)} />
+        ))}
+      </div>
     </div>
   );
 }

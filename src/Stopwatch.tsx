@@ -38,9 +38,9 @@ export function Stopwatch({ onDelete }: Props) {
   const format = (n: number) => n.toString().padStart(2, "0");
 
   return (
-    <div className="relative bg-white rounded-2xl shadow-md border border-gray-200 py-8 px-20 hover:shadow-lg transition-shadow duration-200">
+    <div className="relative py-8 bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200">
       <div className="text-center mb-8 mt-2">
-        <div className="text-6xl font-mono tabular-nums tracking-tight text-gray-900">
+        <div className="text-5xl lg:text-4xl xl:text-6xl font-mono tabular-nums tracking-tight text-gray-900">
           {format(minutes)}:{format(seconds)}.{format(milliseconds)}
         </div>
       </div>
