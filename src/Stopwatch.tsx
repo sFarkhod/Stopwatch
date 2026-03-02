@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Play, Pause, RotateCcw, Trash2 } from "lucide-react";
+import { formatTime } from "./helpers/utils";
 
 type Status = "idle" | "running" | "paused";
 
@@ -22,26 +23,50 @@ export function Stopwatch({ onDelete }: Props) {
   }, [status]);
 
   // handlers
-  const start = () => setStatus("running");
-  const pause = () => setStatus("paused");
-  const resume = () => setStatus("running");
-  const clear = () => {
+  // const start = () => setStatus("running");
+  // const pause = () => setStatus("paused");
+  // const resume = () => setStatus("running");
+  // const clear = () => {
+  //   setTimeMs(0);
+  //   setStatus("idle");
+  // };
+
+  const start = useCallback(() => setStatus("running"), []);
+  const pause = useCallback(() => setStatus("paused"), []);
+  const resume = useCallback(() => setStatus("running"), []);
+  const clear = useCallback(() => {
     setTimeMs(0);
     setStatus("idle");
-  };
+  }, []);
 
-  // formatting
-  const minutes = Math.floor(timeMs / 60000);
-  const seconds = Math.floor((timeMs % 60000) / 1000);
-  const milliseconds = Math.floor((timeMs % 1000) / 10);
+  // formatting the basic way
+  // const minutes = Math.floor(timeMs / 60000);
+  // const seconds = Math.floor((timeMs % 60000) / 1000);
+  // const milliseconds = Math.floor((timeMs % 1000) / 10);
 
-  const format = (n: number) => n.toString().padStart(2, "0");
+  // !formatting using single line useMemo
+  const minutes = useMemo(() => Math.floor(timeMs / 60000), [timeMs]);
+  const seconds = useMemo(() => Math.floor((timeMs % 60000) / 1000), [timeMs]);
+  const milliseconds = useMemo(
+    () => Math.floor((timeMs % 1000) / 10),
+    [timeMs],
+  );
+
+  // !formatting using destructing object
+  // const { minutes, seconds, milliseconds } = useMemo(() => {
+  //   return {
+  //     minutes: Math.floor(timeMs / 60000),
+  //     seconds: Math.floor((timeMs % 60000) / 1000),
+  //     milliseconds: Math.floor((timeMs % 1000) / 10),
+  //   };
+  // }, [timeMs]);
+
 
   return (
     <div className="relative py-8 bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-200">
       <div className="text-center mb-8 mt-2">
         <div className="text-5xl lg:text-4xl xl:text-6xl font-mono tabular-nums tracking-tight text-gray-900">
-          {format(minutes)}:{format(seconds)}.{format(milliseconds)}
+          {formatTime(minutes)}:{formatTime(seconds)}.{formatTime(milliseconds)}
         </div>
       </div>
 

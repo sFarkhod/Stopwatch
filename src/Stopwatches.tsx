@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Stopwatch } from "./Stopwatch";
-import Button from "./components/Button";
+import Button from "./components/Button/Button";
 import { Plus } from "lucide-react";
 
 function Stopwatches() {
   const [stopwatchList, setStopwatchList] = useState<number[]>([]);
 
   // handlers
-  const addStopwatch = () => {
+  // const addStopwatch = () => {
+  //   setStopwatchList((prev) => [...prev, Date.now()]);
+  // };
+  // const removeStopwatch = (id: number) => {
+  //   setStopwatchList((prev) => prev.filter((x) => x !== id));
+  // };
+  const addStopwatch = useCallback(() => {
     setStopwatchList((prev) => [...prev, Date.now()]);
-  };
-  const removeStopwatch = (id: number) => {
+  }, []);
+  const removeStopwatch = useCallback((id: number) => {
     setStopwatchList((prev) => prev.filter((x) => x !== id));
-  };
+  }, []);
 
   return (
     <div className="w-full px-16 py-12">
